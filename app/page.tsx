@@ -1,9 +1,11 @@
-import Image from 'next/image'
+import Navbar from "./components/Navbar";
 
 export default function Home() {
-  return (
-    <div>
+  return (<>
+    <Navbar />
+    <div className="bg-gray-900 min-h-screen text-white font-light">
       Grocery List App!
     </div>
+  </>
   )
 }

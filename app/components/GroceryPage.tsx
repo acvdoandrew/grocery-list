@@ -21,6 +21,7 @@ const GroceryPage = () => {
             const fetchRecipes = async () => {
                 try {
                     const response = await fetch('api/recipes', {
+                        cache: 'no-store',
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

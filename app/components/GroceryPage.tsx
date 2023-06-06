@@ -9,13 +9,37 @@ import React from "react";
 const GroceryPage = () => {
     const [items, setItems] = useState<GroceryItemType[]>([]);
     const [email, setEmail]  = useState('');
+    const [recipes, setRecipes] = useState([]);
     const [isEmailSet, setEmailSet] = useState(false);
 
     const submitEmail = (email: string) => {
         localStorage.setItem('email', email);
         setEmailSet(true);
     }
-
+    
+    useEffect(() => {
+            const fetchRecipes = async () => {
+                try {
+                    const response = await fetch('api/recipes', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ items: items.map(item => item.name) }),
+                    });
+        
+                    if (!response.ok) {
+                        throw new Error('Response not ok')
+                    }
+        
+                    const data = await response.json();
+                    setRecipes(data.recipes);
+                } catch (error) {
+                    console.error('Error fetching recipes: ', error);
+                }
+            }
+            fetchRecipes();
+    }, [items]);
 
     useEffect(() => {
         const storedItems = localStorage.getItem('groceries');
@@ -39,11 +63,12 @@ const GroceryPage = () => {
 
     const increment = (id: string) => {
         setItems(items.map((item) => item.id === id ? { ...item, quantity: item.quantity + 1 } : item))
+        console.log(recipes);
     };
 
     const decrement = async (id: string) => {
         setItems((items) => {
-            return items.map((item) => {
+            const updatedItems = items.map((item) => {
                 if (item.id === id) {
                     const newQuantity = item.quantity > 1 ? item.quantity - 1 : 0;
                     if (newQuantity === 0) {
@@ -63,6 +88,7 @@ const GroceryPage = () => {
                     return item;
                 }
             });
+            return updatedItems.filter(item => item.quantity > 0);
         });
     };
 

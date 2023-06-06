@@ -2,6 +2,8 @@ import sgMail from "@sendgrid/mail";
 import { NextRequest, NextResponse } from "next/server";
 sgMail.setApiKey(process.env.SENDGRID_API_KEY ?? '');
 
+const fromEmail: string = process.env.SENDGRID_EMAIL ?? '';
+
 export const POST =  async (req: NextRequest) => {
 
     const body = await req.json();
@@ -10,7 +12,7 @@ export const POST =  async (req: NextRequest) => {
 
     const msg = {
         to: email,
-        from: 'acvdoandrew@gmail.com',
+        from: fromEmail,
         subject: `${itemName} has run out`,
         text: `${itemName} has run out`,
         html: `<strong>The item ${itemName} has run out</strong>`,

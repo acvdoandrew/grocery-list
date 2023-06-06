@@ -8,10 +8,12 @@ import React from "react";
 
 const GroceryPage = () => {
     const [items, setItems] = useState<GroceryItemType[]>([]);
-    const [email, setEmail]  = useState('')
+    const [email, setEmail]  = useState('');
+    const [isEmailSet, setEmailSet] = useState(false);
 
     const submitEmail = (email: string) => {
         localStorage.setItem('email', email);
+        setEmailSet(true);
     }
 
 
@@ -23,13 +25,13 @@ const GroceryPage = () => {
         }
         if (savedEmail) {
             setEmail(savedEmail);
+            setEmailSet(true)
         }
     }, []);
 
     useEffect(() => {
         localStorage.setItem('groceries', JSON.stringify(items));
-        submitEmail(email)
-    }, [items, email]);
+    }, [items]);
 
     const addItem = (item: GroceryItemType) => {
         setItems((prevItems) => [...prevItems, item]);
@@ -68,18 +70,24 @@ const GroceryPage = () => {
     <div className="flex flex-col justify-center items-center py-8 text-3xl">
         <GroceryForm addItem={addItem} />
         <GroceryList items={items} increment={increment} decrement={decrement} />
-        <form onSubmit={(e) => { e.preventDefault(); submitEmail(email); }} className="flex flex-col justify-center items-center py-8 text-3xl">
-            <label>Enter your email and we will email you when an item runs out!:
-                <input 
-                    type="email"
-                    placeholder="example@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-            </label>
-            <input type="submit" value="Submit" />
-        </form>
+        { isEmailSet ? (
+            <button onClick={() =>{ setEmailSet(false); setEmail(''); }}>
+                Change Email?
+            </button>
+        ) : (
+            <form onSubmit={(e) => { e.preventDefault(); submitEmail(email); }} className="flex flex-col justify-center items-center py-8 text-3xl">
+                <label>Enter your email and we will email you when an item runs out!:
+                    <input 
+                        type="email"
+                        placeholder="example@example.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
+        )}
     </div>
   )
 }

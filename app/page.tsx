@@ -1,9 +1,15 @@
-import Image from 'next/image'
+"use client"
+import GroceryPage from "./components/GroceryPage";
+import Navbar from "./components/Navbar";
+
 
 export default function Home() {
   return (
-    <div>
-      Grocery List App!
+  <>
+    <Navbar />
+    <div className="bg-gray-900 min-h-screen font-light">
+      <GroceryPage />
     </div>
+  </>
   )
 }

@@ -22,9 +22,13 @@ const GroceryPage = () => {
         setItems((prevItems) => [...prevItems, item]);
     };
 
-    const increment = () => {};
+    const increment = (id: string) => {
+        setItems(items.map((item) => item.id === id ? { ...item, quantity: item.quantity + 1 } : item))
+    };
 
-    const decrement = () => {};
+    const decrement = (id: string) => {
+        setItems(items.map((item) => item.id === id ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 } : item))
+    };
 
   return (
     <div className="flex flex-col justify-center items-center py-8 text-3xl">

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import GroceryItem from "@/types";
+import { GroceryItemType } from "@/types";
 import { v4 as uuidv4 } from "uuid";
 
 interface GroceryFormProps {
-    addItem: (item: GroceryItem) => void;
+    addItem: (item: GroceryItemType) => void;
 };
 
 const GroceryForm: React.FC<GroceryFormProps> = ({ addItem }) => {

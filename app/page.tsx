@@ -7,7 +7,7 @@ export default function Home() {
   return (
   <>
     <Navbar />
-    <div className="bg-gray-900 min-h-screen font-light">
+    <div className="bg-slate-50 min-h-screen font-light">
       <GroceryPage />
     </div>
   </>

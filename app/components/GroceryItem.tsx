@@ -1,5 +1,5 @@
 import React from "react";
-import GroceryItemType from "@/types";
+import { GroceryItemType } from "@/types";
 
 interface GroceryItemProps {
     item: GroceryItemType;
@@ -12,7 +12,7 @@ const GroceryItem: React.FC<GroceryItemProps> = ({ item, increment, decrement })
     <div>
         <h2>{item.name}</h2>
         <p>Quantity: {item.quantity}</p>
-        <div className="flex gap-4 text-5xl text-white">
+        <div className="flex gap-4 text-5xl text-orange-400">
             <button onClick={() => increment(item.id)}>+</button>
             <button onClick={() => decrement(item.id)}>-</button>
         </div>

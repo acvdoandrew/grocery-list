@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import GroceryForm from "./GroceryForm";
 import GroceryList from "./GroceryList";
-import GroceryItemType from "@/types";
+import RecipeList from "./RecipeList";
+import { GroceryItemType, RecipeType } from "@/types";
 import React from "react";
 
 
@@ -9,7 +10,7 @@ import React from "react";
 const GroceryPage = () => {
     const [items, setItems] = useState<GroceryItemType[]>([]);
     const [email, setEmail]  = useState('');
-    const [recipes, setRecipes] = useState([]);
+    const [recipes, setRecipes] = useState<RecipeType[]>([]);
     const [isEmailSet, setEmailSet] = useState(false);
 
     const submitEmail = (email: string) => {
@@ -114,6 +115,7 @@ const GroceryPage = () => {
                 <input type="submit" value="Submit" />
             </form>
         )}
+        <RecipeList recipes={recipes}  />
     </div>
   )
 }

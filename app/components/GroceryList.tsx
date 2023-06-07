@@ -1,6 +1,6 @@
 import React from "react";
 import GroceryItem from "./GroceryItem";
-import GroceryItemType from "@/types";
+import { GroceryItemType } from "@/types";
 
 interface GroceryListProps {
     items: GroceryItemType[];

@@ -13,8 +13,8 @@ const GroceryItem: React.FC<GroceryItemProps> = ({ item, increment, decrement })
         <h2>{item.name}</h2>
         <p>Quantity: {item.quantity}</p>
         <div className="flex gap-4 text-5xl text-orange-400">
-            <button onClick={() => increment(item.id)}>+</button>
-            <button onClick={() => decrement(item.id)}>-</button>
+            <button className="hover:bg-slate-200 rounded-md" onClick={() => increment(item.id)}>+</button>
+            <button className="hover:bg-slate-200 rounded-md" onClick={() => decrement(item.id)}>-</button>
         </div>
     </div>
   );

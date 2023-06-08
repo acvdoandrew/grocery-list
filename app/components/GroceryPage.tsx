@@ -103,12 +103,12 @@ const GroceryPage = () => {
             <GroceryForm addItem={addItem} />
             <GroceryList items={items} increment={increment} decrement={decrement} />
             { isEmailSet ? (
-                <button onClick={() =>{ setEmailSet(false); setEmail(''); }}>
+                <button className="text-xl my-3 bg-slate-200  hover:bg-orange-400 rounded-md transition p-2" onClick={() =>{ setEmailSet(false); setEmail(''); }}>
                     Change Email?
                 </button>
             ) : (
                 <form onSubmit={(e) => { e.preventDefault(); submitEmail(email); }} className="flex flex-col justify-center items-center py-8 text-3xl">
-                    <label>Enter your email and we will email you when an item runs out!:
+                    <label className="flex flex-col text-lg md:text-xl lg:text-2xl mx-3">Enter your email and we will email you when an item runs out!:
                         <input 
                             type="email"
                             placeholder="example@example.com"
@@ -117,7 +117,7 @@ const GroceryPage = () => {
                             required
                             />
                     </label>
-                    <input type="submit" value="Submit" />
+                    <input className="text-xl my-3 bg-slate-200  hover:bg-orange-400 rounded-md transition p-2 cursor-pointer" type="submit" value="Submit" />
                 </form>
             )}
         </div>

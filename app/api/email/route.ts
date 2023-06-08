@@ -8,7 +8,6 @@ export const POST =  async (req: NextRequest) => {
 
     const body = await req.json();
     const { itemName, email } = body;
-    console.log('ItemName: ', itemName, 'Email: ', email);
 
     const msg = {
         to: email,

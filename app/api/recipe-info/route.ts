@@ -5,7 +5,6 @@ const APIkey = process.env.SPOONACULAR_API_KEY ?? '';
 
 export const POST = async (req: NextRequest) => {
     const { id } = await req.json();
-    console.log(id);
 
     try {
         const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${APIkey}`, {

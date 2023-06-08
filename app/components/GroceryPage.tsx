@@ -70,7 +70,6 @@ const GroceryPage = () => {
 
     const increment = (id: string) => {
         setItems(items.map((item) => item.id === id ? { ...item, quantity: item.quantity + 1 } : item))
-        console.log(recipes);
     };
 
     const decrement = async (id: string) => {

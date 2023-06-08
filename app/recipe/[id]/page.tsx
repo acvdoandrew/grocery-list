@@ -18,23 +18,18 @@ const Page: React.FC<Params> = ({ params }) => {
     const fetchRecipeInfo = async () => {
       if (!isFetched) {
         try {
-          // const response = await fetch('/api/recipe-info', {
-          //   method: 'POST',
-          //   headers: {
-          //     'Content-Type': 'application/json',
-          //   },
-          //   body: JSON.stringify({ id: params.id }),
-          // });
-          // if (!response.ok) {
-          //   throw new Error('Response not ok');
-          // }
-          // const data = await response.json()
-          // setRecipe(data.recipeInfo);
-
-          // MOCK DATA
-          const response = await fetch('/api/recipe.json');
-          const data = await response.json();
-          setRecipe(data);
+          const response = await fetch('/api/recipe-info', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: params.id }),
+          });
+          if (!response.ok) {
+            throw new Error('Response not ok');
+          }
+          const data = await response.json()
+          setRecipe(data.recipeInfo);
           setIsFetched(true);
         } catch (error) {
           console.error('Error fetching recipe: ', error);

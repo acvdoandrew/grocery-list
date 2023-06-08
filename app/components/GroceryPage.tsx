@@ -9,7 +9,6 @@ import React from "react";
 
 const GroceryPage = () => {
     const [items, setItems] = useState<GroceryItemType[]>([]);
-    const [prevItems, setPrevItems] = useState<GroceryItemType[]>([]);
     const [email, setEmail]  = useState('');
     const [recipes, setRecipes] = useState<RecipeType[]>([]);
     const [isEmailSet, setEmailSet] = useState(false);
@@ -49,27 +48,21 @@ const GroceryPage = () => {
         const storedItems = localStorage.getItem('groceries');
         const savedEmail = localStorage.getItem('email');
         if (storedItems) {
-            const parsedItems = JSON.parse(storedItems)
-            setItems(parsedItems);
-            setPrevItems(parsedItems);
+            setItems(JSON.parse(storedItems));
         }
         if (savedEmail) {
             setEmail(savedEmail);
             setEmailSet(true)
         }
-        fetchRecipes();
     }, []);
 
     useEffect(() => {
         localStorage.setItem('groceries', JSON.stringify(items));
-        if (prevItems.length > items.length) {
-            fetchRecipes();
-        }
-        setPrevItems(items)
-    }, [items, prevItems.length]);
+    }, [items]);
 
-    const addItem = (item: GroceryItemType) => {
+    const addItem = async (item: GroceryItemType) => {
         setItems((prevItems) => [...prevItems, item]);
+        await fetchRecipes();
     };
 
     const increment = (id: string) => {
@@ -101,6 +94,7 @@ const GroceryPage = () => {
             });
             return updatedItems.filter(item => item.quantity > 0);
         });
+        await fetchRecipes();
     };
 
   return (

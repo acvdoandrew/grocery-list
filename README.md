@@ -35,7 +35,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
+[![Product Name Screen Shot][product-screenshot]](https://i.imgur.com/czzmThU.png)
 
 Want to be able to keep track of all your groceries and be able to get recipes all in the same place? Then this project will be great for your needs.
 
@@ -88,6 +88,8 @@ First make sure you have npm installed on your machine.
     npm run dev
     ```
 
+7. If you prefer to see a live deployed version you can check it out [here](https://grocery-list-phi.vercel.app/)  
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -104,7 +106,7 @@ First make sure you have npm installed on your machine.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: https://i.imgur.com/czzmThU.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB

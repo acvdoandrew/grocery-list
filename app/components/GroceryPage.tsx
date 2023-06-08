@@ -98,28 +98,32 @@ const GroceryPage = () => {
     };
 
   return (
-    <div className="flex flex-col justify-center items-center py-8 text-3xl">
-        <GroceryForm addItem={addItem} />
-        <GroceryList items={items} increment={increment} decrement={decrement} />
-        { isEmailSet ? (
-            <button onClick={() =>{ setEmailSet(false); setEmail(''); }}>
-                Change Email?
-            </button>
-        ) : (
-            <form onSubmit={(e) => { e.preventDefault(); submitEmail(email); }} className="flex flex-col justify-center items-center py-8 text-3xl">
-                <label>Enter your email and we will email you when an item runs out!:
-                    <input 
-                        type="email"
-                        placeholder="example@example.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
-        )}
-        <RecipeList recipes={recipes}  />
+    <div className="flex flex-col lg:flex-row justify-evenly items-center py-8 text-3xl">
+        <div className="flex flex-col justify-center items-center">
+            <GroceryForm addItem={addItem} />
+            <GroceryList items={items} increment={increment} decrement={decrement} />
+            { isEmailSet ? (
+                <button onClick={() =>{ setEmailSet(false); setEmail(''); }}>
+                    Change Email?
+                </button>
+            ) : (
+                <form onSubmit={(e) => { e.preventDefault(); submitEmail(email); }} className="flex flex-col justify-center items-center py-8 text-3xl">
+                    <label>Enter your email and we will email you when an item runs out!:
+                        <input 
+                            type="email"
+                            placeholder="example@example.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            />
+                    </label>
+                    <input type="submit" value="Submit" />
+                </form>
+            )}
+        </div>
+        <div className="flex flex-col justify-center items-center">
+            <RecipeList  recipes={recipes}  />
+        </div>
     </div>
   )
 }

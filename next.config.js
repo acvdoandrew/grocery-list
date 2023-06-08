@@ -4,6 +4,6 @@ const nextConfig = {}
 module.exports = {
     nextConfig,
     images: {
-        domains:['spoonacular.com']
+        remotePatterns: [{ hostname: 'spoonacular.com'}]
     }
 }

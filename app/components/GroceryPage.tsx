@@ -12,6 +12,7 @@ const GroceryPage = () => {
     const [email, setEmail]  = useState('');
     const [recipes, setRecipes] = useState<RecipeType[]>([]);
     const [isEmailSet, setEmailSet] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     const submitEmail = (email: string) => {
         localStorage.setItem('email', email);
@@ -20,27 +21,29 @@ const GroceryPage = () => {
     
     const fetchRecipes = async () => {
         try {
-            // const response = await fetch('api/recipes', {
-            //     cache: 'no-store',
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify({ items: items.map(item => item.name) }),
-            // });    
-            //  if (!response.ok) {
-            //     throw new Error('Response not ok')
-            // }
-            // const data = await response.json();
-            // setRecipes(data.recipes);
-
-            // MOCK DATA
-            const response = await fetch('/api/recipes.json');
-            console.log(response)
+            const response = await fetch('api/recipes', {
+                cache: 'no-store',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ items: items.map(item => item.name) }),
+            });    
+             if (!response.ok) {
+                throw new Error('Response not ok')
+            }
             const data = await response.json();
-            setRecipes(data);
+
+            if (data.error && data.error.message.includes('daily quota exceeded')) {
+                throw new Error('Daily quota for API calls has been excedeed. Please try again later.');
+            }
+
+            setRecipes(data.recipes);
+            setError(null)
         } catch (error) {
             console.error('Error fetching recipes: ', error);
+
+            setError((error as Error)?.message)
         }
     }
 
@@ -98,28 +101,33 @@ const GroceryPage = () => {
     };
 
   return (
-    <div className="flex flex-col justify-center items-center py-8 text-3xl">
-        <GroceryForm addItem={addItem} />
-        <GroceryList items={items} increment={increment} decrement={decrement} />
-        { isEmailSet ? (
-            <button onClick={() =>{ setEmailSet(false); setEmail(''); }}>
-                Change Email?
-            </button>
-        ) : (
-            <form onSubmit={(e) => { e.preventDefault(); submitEmail(email); }} className="flex flex-col justify-center items-center py-8 text-3xl">
-                <label>Enter your email and we will email you when an item runs out!:
-                    <input 
-                        type="email"
-                        placeholder="example@example.com"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
-        )}
-        <RecipeList recipes={recipes}  />
+    <div className="flex flex-col lg:flex-row justify-evenly items-center py-8 text-3xl">
+        {error && <div>{error}</div>}
+        <div className="flex flex-col justify-center items-center">
+            <GroceryForm addItem={addItem} />
+            <GroceryList items={items} increment={increment} decrement={decrement} />
+            { isEmailSet ? (
+                <button className="text-xl my-3 bg-slate-200  hover:bg-orange-400 rounded-md transition p-2" onClick={() =>{ setEmailSet(false); setEmail(''); }}>
+                    Change Email?
+                </button>
+            ) : (
+                <form onSubmit={(e) => { e.preventDefault(); submitEmail(email); }} className="flex flex-col justify-center items-center py-8 text-3xl">
+                    <label className="flex flex-col text-lg md:text-xl lg:text-2xl mx-3">Enter your email and we will email you when an item runs out!:
+                        <input 
+                            type="email"
+                            placeholder="example@example.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            />
+                    </label>
+                    <input className="text-xl my-3 bg-slate-200  hover:bg-orange-400 rounded-md transition p-2 cursor-pointer" type="submit" value="Submit" />
+                </form>
+            )}
+        </div>
+        <div className="flex flex-col justify-center items-center">
+            <RecipeList  recipes={recipes}  />
+        </div>
     </div>
   )
 }

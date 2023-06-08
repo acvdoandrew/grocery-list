@@ -11,7 +11,7 @@ export const POST = async (req: NextRequest) => {
         const response = await axios.get(`https://api.spoonacular.com/recipes/findByIngredients?apiKey=${APIkey}`, {
             params: {
                 ingredients: items.join(','),
-                number: 10, // Limit to 10 results.
+                number: 5, // Limit to 10 results.
             },
             headers: {
                 'Content-Type': 'application/json',

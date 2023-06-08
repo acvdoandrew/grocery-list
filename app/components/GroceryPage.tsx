@@ -18,29 +18,25 @@ const GroceryPage = () => {
         setEmailSet(true);
     }
     
-    useEffect(() => {
-        const fetchRecipes = async () => {
-            try {
-                const response = await fetch('api/recipes', {
-                    cache: 'no-store',
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ items: items.map(item => item.name) }),
-                });    
-                 if (!response.ok) {
-                    throw new Error('Response not ok')
-                }
-        
-                const data = await response.json();
-                setRecipes(data.recipes);
-            } catch (error) {
-                console.error('Error fetching recipes: ', error);
+    const fetchRecipes = async () => {
+        try {
+            const response = await fetch('api/recipes', {
+                cache: 'no-store',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ items: items.map(item => item.name) }),
+            });    
+             if (!response.ok) {
+                throw new Error('Response not ok')
             }
+            const data = await response.json();
+            setRecipes(data.recipes);
+        } catch (error) {
+            console.error('Error fetching recipes: ', error);
         }
-        fetchRecipes();
-    }, [items]);
+    }
 
     useEffect(() => {
         const storedItems = localStorage.getItem('groceries');
@@ -58,8 +54,9 @@ const GroceryPage = () => {
         localStorage.setItem('groceries', JSON.stringify(items));
     }, [items]);
 
-    const addItem = (item: GroceryItemType) => {
+    const addItem = async (item: GroceryItemType) => {
         setItems((prevItems) => [...prevItems, item]);
+        await fetchRecipes();
     };
 
     const increment = (id: string) => {
@@ -91,6 +88,7 @@ const GroceryPage = () => {
             });
             return updatedItems.filter(item => item.quantity > 0);
         });
+        await fetchRecipes();
     };
 
   return (

@@ -20,19 +20,25 @@ const GroceryPage = () => {
     
     const fetchRecipes = async () => {
         try {
-            const response = await fetch('api/recipes', {
-                cache: 'no-store',
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ items: items.map(item => item.name) }),
-            });    
-             if (!response.ok) {
-                throw new Error('Response not ok')
-            }
+            // const response = await fetch('api/recipes', {
+            //     cache: 'no-store',
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify({ items: items.map(item => item.name) }),
+            // });    
+            //  if (!response.ok) {
+            //     throw new Error('Response not ok')
+            // }
+            // const data = await response.json();
+            // setRecipes(data.recipes);
+
+            // MOCK DATA
+            const response = await fetch('/api/recipes.json');
+            console.log(response)
             const data = await response.json();
-            setRecipes(data.recipes);
+            setRecipes(data);
         } catch (error) {
             console.error('Error fetching recipes: ', error);
         }
